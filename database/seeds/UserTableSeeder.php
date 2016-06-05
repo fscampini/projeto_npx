@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use ProjectNpx\User;
 
 class UserTableSeeder extends Seeder
 {
@@ -15,12 +16,18 @@ class UserTableSeeder extends Seeder
 
         factory('ProjectNpx\User')->create(
             [
-                'name'=> 'fscampini',
+                'name'=> 'Felipe Scampini da Silva',
                 'email' => 'fscampini@gmail.com',
-                'password' => Hash::make('evfdna85')
+                'password' => Hash::make('evfdna85'),
+                'is_admin' => true,
+                'is_superuser' => true
             ]
         );
 
         factory('ProjectNpx\User', 10)->create();
+
+        // Atribuindo o menu ao usuário Felipe Scampini
+        $user = User::find(1);
+        $user->menus()->attach([1,2,3,4,5,6,7,8,9]);
     }
 }

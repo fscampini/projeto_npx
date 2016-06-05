@@ -17,7 +17,7 @@
         </div>
 
 
-        <!-- search form (Optional) -->
+        <!-- search form (Optional)
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Search..."/>
@@ -26,60 +26,40 @@
                 </span>
             </div>
         </form>
-        <!-- /.search form -->
+        /.search form -->
 
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
             <li class="header">Funcionalidades</li>
-            <!-- Optionally, you can add icons to the links -->
-            <li id="1">
-                <a href="{{ route('documents.upload_documents') }}">
-                    <i class="fa fa-share-alt" aria-hidden="true"></i>
-                    <span>Integração com as Operadoras</span>
-                </a>
-            </li>
-            <li id="2">
-                <a href="{{ route('documents.monitor') }}">
-                    <i class="fa fa-tachometer" aria-hidden="true"></i>
-                    <span>Monitoramento de XMLs</span>
-                </a>
-            </li>
-            <li id="3">
-                <a href="#">
-                    <i class="fa fa-tasks" aria-hidden="true"></i>
-                    <span>Distribuidor de Registros</span>
-                </a>
-            </li>
-            <li id="4">
-                <a href="#">
-                    <i class="fa fa-users" aria-hidden="true"></i>
-                    <span>Gerir equipe</span>
-                </a>
-            </li>
-            <li id="5">
-                <a href="#">
-                    <i class="fa fa-file-code-o" aria-hidden="true"></i>
-                    <span>Editar XML's</span>
-                </a>
-            </li>
-            <li id="6">
-                <a href="#">
-                    <i class="fa fa-cogs" aria-hidden="true"></i>
-                    <span>Reprocessar XML's</span>
-                </a>
-            </li>
-            <li id="7" class="treeview">
-                <a href="#">
-                    <i class="fa fa-pie-chart"></i>
-                    <span>Dashboards</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#">Reports 1</a></li>
-                    <li><a href="#">Reports 2</a></li>
-                </ul>
-            </li>
+
+            @foreach(auth()->user()->menus as $menu)
+                @if($menu->treeview_flag == true)
+
+                    <li id="{{ $menu->id }}" class="treeview">
+                        <a href="#">
+                            {!! $menu->font_awesome_description !!}
+                            <span>{{ $menu->name }}</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            @foreach($menu->sub_menus as $sub_menu)
+                                <li><a href="{{ route($sub_menu->route_description) }}">{{ $sub_menu->name }}</a></li>
+                            @endforeach
+                        </ul>
+                    </li>
+                @else
+                    <!-- Optionally, you can add icons to the links -->
+                    <li id="{{ $menu->id }}">
+                        <a href="{{ route($menu->route_description) }}">
+                            {!! $menu->font_awesome_description !!}
+                            <span>{{ $menu->name }}</span>
+                        </a>
+                    </li>
+                @endif
+            @endforeach
+
+
         </ul>
         <!-- /.sidebar-menu -->
 

@@ -51,6 +51,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="{{ asset("bower_components/bootstrap/dist/js/bootstrap.min.js") }}"></script>
 
-	@include('footer')
+	@include('footer_login')
 
 </body>

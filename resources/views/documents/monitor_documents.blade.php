@@ -29,14 +29,24 @@
                                 </thead>
                                 <tbody>
 
+                                @forelse($documents as $document)
                                 <tr>
-                                    <td><small class="label pull-left bg-gray">Aguardando transmissão</small></td>
-                                    <td>1243131231.xml</td>
-                                    <td>Unimed</td>
-                                    <td>Felipe Scampini</td>
-                                    <td>17/05/2016 11:00:00</td>
-                                    <td>17/05/2016 11:00:05</td>
-                                    <td>1</td>
+                                    @if($document->status == 0)
+                                        <td><small class="label pull-left bg-gray">Aguardando Transmissão</small></td>
+                                    @elseif($document->status == 1)
+                                        <td><small class="label pull-left bg-yellow">Aguardando Retorno</small></td>
+                                    @elseif($document->status == 2)
+                                        <td><small class="label pull-left bg-red">Erro ao processar</small></td>
+                                    @elseif($document->status == 3)
+                                        <td><small class="label pull-left bg-green">Processado com sucesso</small></td>
+                                    @endif
+
+                                    <td><a href="#">{{ $document->original_file_name }}</a></td>
+                                    <td>{{ $document->partner }}</td>
+                                    <td>{{ $document->user_created->name }}</td>
+                                    <td>{{ $document->created_at }}</td>
+                                    <td>{{ $document->ws_send_date }}</td>
+                                    <td>{{ $document->sending_quantity }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-default">Ação</button>
@@ -51,83 +61,18 @@
                                             </ul>
                                         </div>
                                     </td>
-                                    <td><a href="#">Histórico</a></td>
+                                    <td><a href="{{ route('document.history', ['id' => $document->id]) }}">Histórico</a></td>
                                 </tr>
 
-                                <tr>
-                                    <td><small class="label pull-left bg-yellow">Aguardando retorno</small></td>
-                                    <td>1243131231.xml</td>
-                                    <td>Unimed</td>
-                                    <td>Felipe Scampini</td>
-                                    <td>17/05/2016 11:00:00</td>
-                                    <td>17/05/2016 11:00:05</td>
-                                    <td>1</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default">Ação</button>
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Editar</a></li>
-                                                <li><a href="#">Excluir</a></li>
-                                                <li><a href="#">Reenviar</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td><a href="#">Histórico</a></td>
-                                </tr>
+                                @empty
 
                                 <tr>
-                                    <td><small class="label pull-left bg-green">Retorno Sucesso</small></td>
-                                    <td>1243131231.xml</td>
-                                    <td>Unimed</td>
-                                    <td>Felipe Scampini</td>
-                                    <td>17/05/2016 11:00:00</td>
-                                    <td>17/05/2016 11:00:05</td>
-                                    <td>1</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default">Ação</button>
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Editar</a></li>
-                                                <li><a href="#">Excluir</a></li>
-                                                <li><a href="#">Reenviar</a></li>
-                                            </ul>
-                                        </div>
+                                    <td class="" colspan="9">
+                                        <p> Nenhum item encontrado.</p>
                                     </td>
-                                    <td><a href="#">Histórico</a></td>
                                 </tr>
 
-                                <tr>
-                                    <td><small class="label pull-left bg-red">Retorno Erro</small></td>
-                                    <td>1243131231.xml</td>
-                                    <td>Unimed</td>
-                                    <td>Felipe Scampini</td>
-                                    <td>17/05/2016 11:00:00</td>
-                                    <td>17/05/2016 11:00:05</td>
-                                    <td>1</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default">Ação</button>
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Editar</a></li>
-                                                <li><a href="#">Excluir</a></li>
-                                                <li><a href="#">Reenviar</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td><a href="#">Histórico</a></td>
-                                </tr>
+                                @endforelse
 
                                 </tbody>
                                 <tfoot>
@@ -144,6 +89,8 @@
                                 </tr>
                                 </tfoot>
                             </table>
+
+                            {!! $documents->render() !!}
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -158,18 +105,10 @@
 
 <!-- page script -->
 <script>
-    $(function () {
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false
-        });
-    });
+
 </script>
-{{ $indice = '2' }}
+
+<input type="hidden" value="{{ $indice = '2' }}">
 
 @endsection
 

@@ -4,16 +4,16 @@ namespace ProjectNpx;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Document extends Model
+class SubMenu extends Model
 {
     protected $fillable = [
-        'data_base_filename',
-        'original_file_name',
-        'partner',
+        'route_description',
+        'name',
+        'menu_id',
         'created_by',
         'last_updated_by'
     ];
-    
+
     public function user_created(){
         return $this->belongsTo('ProjectNpx\User', 'created_by');
     }
@@ -22,7 +22,7 @@ class Document extends Model
         return $this->belongsTo('ProjectNpx\User', 'last_updated_by');
     }
 
-    public function documentHistory(){
-        return $this->hasMany('ProjectNpx\DocumentHistory');
+    public function menu(){
+        return $this->belongsTo('ProjectNpx\Menu');
     }
 }

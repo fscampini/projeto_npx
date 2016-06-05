@@ -67,5 +67,5 @@
         };
     </script>
 
-    {{ $indice = '1' }}
+    <input type="hidden" value="{{ $indice = '1' }}">
 @endsection

@@ -3,6 +3,7 @@
 namespace ProjectNpx\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use ProjectNpx\Http\Middleware\VerifyAdmin;
 
 class Kernel extends HttpKernel
 {
@@ -49,5 +50,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
         'guest' => \ProjectNpx\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'admin' => \ProjectNpx\Http\Middleware\VerifyAdmin::class,
+        'superuser' => \ProjectNpx\Http\Middleware\VerifySuperUser::class
     ];
 }

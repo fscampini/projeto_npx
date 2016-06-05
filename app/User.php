@@ -15,6 +15,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
+        'is_superuser'
     ];
 
     /**
@@ -28,5 +30,15 @@ class User extends Authenticatable
 
     public function documents(){
         return $this->hasMany('ProjectNpx\Document');
+    }
+    
+    public function documentsHistories()
+    {
+        return $this->hasMany('ProjectNpx\DocumentHistory');
+    }
+
+    public function menus()
+    {
+        return $this->belongsToMany('ProjectNpx\Menu');
     }
 }
