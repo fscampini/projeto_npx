@@ -1,6 +1,5 @@
 <!-- Left side column. contains the sidebar -->
 <aside class="main-sidebar">
-
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
@@ -16,26 +15,13 @@
             </div>
         </div>
 
-
-        <!-- search form (Optional)
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                <span class="input-group-btn">
-                  <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                </span>
-            </div>
-        </form>
-        /.search form -->
-
-
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
             <li class="header">Funcionalidades</li>
 
             @foreach(auth()->user()->menus as $menu)
-                @if($menu->treeview_flag == true)
 
+                @if($menu->child_menus->count() >= 1)
                     <li id="{{ $menu->id }}" class="treeview">
                         <a href="#">
                             {!! $menu->font_awesome_description !!}
@@ -43,9 +29,7 @@
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            @foreach($menu->sub_menus as $sub_menu)
-                                <li><a href="{{ route($sub_menu->route_description) }}">{{ $sub_menu->name }}</a></li>
-                            @endforeach
+                            @include('sidebar_submenus', ['menus' => $menu->child_menus ])
                         </ul>
                     </li>
                 @else
@@ -58,12 +42,9 @@
                     </li>
                 @endif
             @endforeach
-
-
         </ul>
         <!-- /.sidebar-menu -->
-
-
     </section>
     <!-- /.sidebar -->
 </aside>
+

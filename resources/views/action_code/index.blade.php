@@ -39,8 +39,8 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <i class="fa fa-plug" aria-hidden="true"></i>
-                    <h3 class="box-title">Cadastro de Menu</h3>
+                    <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                    <h3 class="box-title">Cadastro de Ações</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -59,32 +59,29 @@
                         </div>
                     @endif
 
-                    <a href="{{ Route('superuser.menu.create') }}" class="btn btn-primary" role="button">Adicionar Menu</a>
+                    <a href="{{ Route('superuser.action_code.create') }}" class="btn btn-primary" role="button">Adicionar Ação</a>
                     <br>
                     <br>
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>Nome</th>
-                            <th>Descrição da Rota</th>
+                            <th>Índice</th>
+                            <th>Descrição</th>
                             <th>Font Awesome</th>
-                            <th>Sub-Menus</th>
+                            <th>Label do Status</th>
                             <th>Atualizado Por</th>
-                            <th>Data Atualização</th>
                             <th>Ação</th>
                         </tr>
                         </thead>
                         <tbody>
 
-                        @forelse($menus as $menu)
+                        @forelse($action_codes as $action_code)
                             <tr>
-                                <td><a href="#">{{ $menu->name}}</a></td>
-                                <td>{{ $menu->route_description }}</td>
-                                <td>{!! $menu->font_awesome_description !!}</td>
-                                <td>{{ $menu->child_menus->count() }}</td>
-                                <td>{{ $menu->user_updated->name }}</td>
-                                <td>{{ $menu->updated_at }}</td>
-
+                                <td><a href="#">{{ $action_code->id}}</a></td>
+                                <td>{{ $action_code->description}}</td>
+                                <td>{!! $action_code->font_awesome_description !!} </td>
+                                <td>{!! $action_code->status_label !!} </td>
+                                <td>{{ $action_code->user_updated->name}}</td>
 
                                 <td>
                                     <div class="btn-group">
@@ -94,9 +91,8 @@
                                             <span class="sr-only">Toggle Dropdown</span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="{{ Route('superuser.menu.edit', $menu->id) }}">Editar</a></li>
-                                            <li><a onclick="show_modal('{{ Route('superuser.menu.destroy', $menu->id) }}', '{{ $menu->name }}')" data-toggle="modal" data-target="#myModal" href="#">Excluir</a></li>
-                                            <li><a href="{{ Route('superuser.menu.submenu.index', $menu->id) }}">SubMenus</a></li>
+                                            <li><a href="{{ Route('superuser.action_code.edit', $action_code->id) }}">Editar</a></li>
+                                            <li><a onclick="show_modal('{{ Route('superuser.action_code.destroy', $action_code->id) }}', '{{ $action_code->description }}')" data-toggle="modal" data-target="#myModal" href="#">Excluir</a></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -115,18 +111,17 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <th>Nome</th>
-                            <th>Descrição da Rota</th>
+                            <th>Índice</th>
+                            <th>Descrição</th>
                             <th>Font Awesome</th>
+                            <th>Label do Status</th>
                             <th>Atualizado Por</th>
-                            <th>Sub-Menus</th>
-                            <th>Data Atualização</th>
                             <th>Ação</th>
                         </tr>
                         </tfoot>
                     </table>
 
-                    {!! $menus->render() !!}
+                    {!! $action_codes->render() !!}
                 </div>
                 <!-- /.box-body -->
             </div>

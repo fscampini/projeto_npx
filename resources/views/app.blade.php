@@ -40,6 +40,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <link href="{{ asset ("multiselect/css/multi-select.css") }}" media="screen" rel="stylesheet" type="text/css">
+
 
 </head>
 
@@ -102,6 +104,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{ asset ("/bower_components/AdminLTE/plugins/fastclick/fastclick.js") }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset ("/bower_components/AdminLTE/dist/js/demo.js") }}"></script>
+
+<script src="{{ asset ("multiselect/js/jquery.quicksearch.js") }}" type="text/javascript"></script>
+<script src="{{ asset ("multiselect/js/jquery.multi-select.js") }}" type="text/javascript"></script>
+
 
 
 <script>

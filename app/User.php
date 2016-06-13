@@ -39,6 +39,6 @@ class User extends Authenticatable
 
     public function menus()
     {
-        return $this->belongsToMany('ProjectNpx\Menu');
+        return $this->belongsToMany('ProjectNpx\Menu')->where('parent_menu_id', '=', null);
     }
 }

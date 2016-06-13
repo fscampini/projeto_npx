@@ -10,7 +10,7 @@ class Menu extends Model
         'route_description',
         'font_awesome_description',
         'name',
-        'treeview_flag',
+        'parent_menu_id',
         'created_by',
         'last_updated_by'
     ];
@@ -24,7 +24,7 @@ class Menu extends Model
     }
 
     public function documentHistory(){
-        return $this->hasMany('ProjectNpx\SubMenu');
+        return $this->hasMany('ProjectNpx\DocumentHistory');
     }
 
     public function users()
@@ -32,21 +32,13 @@ class Menu extends Model
         return $this->belongsToMany('ProjectNpx\User');
     }
 
-    public function sub_menus()
+    public function child_menus()
     {
-        return $this->hasMany('ProjectNpx\SubMenu');
+        return $this->hasMany('ProjectNpx\Menu', 'parent_menu_id', 'id');
     }
 
-    public function treeview_flag()
+    public function parent_menu()
     {
-        switch ($this->attributes['treeview_flag'])
-        {
-            case 0:
-                return 'Falso';
-                break;
-            case 1:
-                return 'Verdadeiro';
-                break;
-        }
+        return $this->belongsTo('ProjectNpx\Menu', 'parent_menu_id');
     }
 }

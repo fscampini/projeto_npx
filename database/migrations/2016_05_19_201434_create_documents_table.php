@@ -14,7 +14,6 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
-            $table->smallInteger('status')->default(0);
             $table->string('original_file_name', 100);
             $table->string('partner', 100);
             $table->integer('created_by');

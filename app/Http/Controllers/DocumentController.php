@@ -90,10 +90,10 @@ class DocumentController extends Controller
         return str_replace(' ', '', str_replace(':','',$format)).'.'.$extension;
     }
 
-    public function maintain_history($action_id, $user_id, $document_id)
+    public function maintain_history($action_code_id, $user_id, $document_id)
     {
         DocumentHistory::create([
-            'action_id' => $action_id,
+            'action_code_id' => $action_code_id,
             'created_by' => $user_id,
             'document_id' => $document_id
         ]);

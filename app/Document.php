@@ -9,6 +9,7 @@ class Document extends Model
     protected $fillable = [
         'data_base_filename',
         'original_file_name',
+        'action_code_id',
         'partner',
         'created_by',
         'last_updated_by'
@@ -24,5 +25,10 @@ class Document extends Model
 
     public function documentHistory(){
         return $this->hasMany('ProjectNpx\DocumentHistory');
+    }
+
+    public function documentStatus()
+    {
+        return $this->belongsTo('ProjectNpx\ActionCode', 'action_code_id');
     }
 }

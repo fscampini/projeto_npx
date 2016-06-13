@@ -4,7 +4,7 @@
 
     <!-- SELECT2 EXAMPLE -->
     <div class="box box-primary">
-        {!! Form::model($menu, ['route'=> ['superuser.menu.update', $menu->id], 'method'=>'put']) !!}
+        {!! Form::model($action_code, ['route'=> ['superuser.action_code.update', $action_code->id], 'method'=>'put']) !!}
             <div class="box-header with-border">
                 <i class="fa fa-plug" aria-hidden="true"></i>
                 <h3 class="box-title">Editar Menu</h3>
@@ -27,14 +27,14 @@
                         </div>
                     @endif
 
-                    @include('menu._form')
+                    @include('action_code._form')
 
                 </div>
                 <!-- /.row -->
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <a href="{{ Route('superuser.menu.index') }}" class="btn btn-primary" role="button">Retornar</a>
+                <a href="{{ Route('superuser.action_code.index') }}" class="btn btn-primary" role="button">Retornar</a>
                 {!! Form::submit('Atualizar Menu', ['class'=> 'btn btn-primary']) !!}
             </div>
         {!! Form::close() !!}
@@ -51,10 +51,21 @@
             $( ".inner" ).append(content);
         });
 
+        $( ".target-label" ).change(function() {
+            var content = $( ".target-label" ).val()
+            $( ".inner-label" ).empty();
+            $( ".inner-label" ).append(content);
+        });
+
         $( document ).ready(function() {
             var content = $( ".target" ).val()
             $( ".inner" ).empty();
             $( ".inner" ).append(content);
+
+            var content2 = $( ".target-label" ).val()
+            $( ".inner-label" ).empty();
+            $( ".inner-label" ).append(content2);
         });
+
     </script>
 @endsection

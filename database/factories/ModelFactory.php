@@ -20,7 +20,7 @@ $factory->define(ProjectNpx\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(ProjectNpx\ActionHistoryCode::class, function (Faker\Generator $faker) {
+$factory->define(ProjectNpx\ActionCode::class, function (Faker\Generator $faker) {
     return [
         'description' => $faker->name,
         'font_awesome_description' => '<i class="fa fa-cloud-upload" aria-hidden="true"></i>',
@@ -32,17 +32,6 @@ $factory->define(ProjectNpx\Menu::class, function (Faker\Generator $faker) {
     return [
         'route_description' => 'documents.upload_documents',
         'font_awesome_description' => '<i class="fa fa-share-alt" aria-hidden="true"></i>',
-        'name' => $faker->name,
-        'treeview_flag' => false,
-        'created_by' => 1,
-        'last_updated_by' => 1
-    ];
-});
-
-$factory->define(ProjectNpx\SubMenu::class, function (Faker\Generator $faker) {
-    return [
-        'menu_id' => 9,
-        'route_description' => 'documents.monitor',
         'name' => $faker->name,
         'created_by' => 1,
         'last_updated_by' => 1

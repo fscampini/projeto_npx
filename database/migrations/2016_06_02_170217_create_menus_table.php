@@ -17,7 +17,8 @@ class CreateMenusTable extends Migration
             $table->string('route_description', 200);
             $table->string('font_awesome_description', 200);
             $table->string('name', 100)->unique();
-            $table->boolean('treeview_flag');
+            $table->integer('parent_menu_id')->nullable()->unsigned();
+            $table->foreign('parent_menu_id')->references('id')->on('menus');
             $table->integer('created_by');
             $table->foreign('created_by')->references('id')->on('users');
             $table->integer('last_updated_by');

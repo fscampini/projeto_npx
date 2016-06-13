@@ -21,13 +21,20 @@ class MenuController extends Controller
     }
 
     public function index(){
-        $menus = $this->menuModel->paginate(5);
+        $menus = $this->menuModel->where('parent_menu_id', '=', null)->paginate(5);
+        return view('menu.index', compact('menus'));
+    }
+
+    public function submenuIndex($id)
+    {
+        $menus = $this->menuModel->where('parent_menu_id', '=', $id)->paginate(5);
         return view('menu.index', compact('menus'));
     }
 
     public function create()
     {
-        return view('menu.create');
+        $menus = $this->menuModel->lists('name', 'id');
+        return view('menu.create', compact('menus'));
     }
 
     public function store(Request $request)
@@ -50,7 +57,7 @@ class MenuController extends Controller
                     'route_description' => $request->route_description,
                     'font_awesome_description' => $request->font_awesome_description,
                     'name' => $request->name,
-                    'treeview_flag' => $request->treeview_flag,
+                    'parent_menu_id' => $request->parent_menu_id,
                     'created_by' => Auth::user()->id,
                     'last_updated_by' => Auth::user()->id
                 ]);
@@ -66,8 +73,9 @@ class MenuController extends Controller
     public function edit($id)
     {
         $menu = $this->menuModel->find($id);
+        $menus = $this->menuModel->where('id', '<>', $id)->lists('name', 'id');
 
-        return view('menu.edit', compact('menu'));
+        return view('menu.edit', compact(['menu', 'menus']));
     }
 
     public function update(Request $request, $id)
@@ -81,7 +89,7 @@ class MenuController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()){
-            return Redirect::to('superuser/menu/create')->withErrors($validator);
+            return back()->withErrors($validator);
         } else {
 
             try {
@@ -90,13 +98,13 @@ class MenuController extends Controller
                     'route_description' => $request->route_description,
                     'font_awesome_description' => $request->font_awesome_description,
                     'name' => $request->name,
-                    'treeview_flag' => $request->treeview_flag,
+                    'parent_menu_id' => $request->parent_menu_id,
                     'created_by' => Auth::user()->id,
                     'last_updated_by' => Auth::user()->id
                 ]);
 
             } catch (\Exception $e) {
-                return Redirect::to('superuser/menu/create')->withErrors($e->getMessage());
+                return back()->withErrors($e->getMessage());
             }
         }
 
@@ -111,7 +119,7 @@ class MenuController extends Controller
             $menuModel->delete();
 
         } catch (\Exception $e) {
-            return Redirect::back()->withErrors($e->getMessage());
+            return back()->withErrors($e->getMessage());
         }
 
         return redirect()->route('superuser.menu.index');

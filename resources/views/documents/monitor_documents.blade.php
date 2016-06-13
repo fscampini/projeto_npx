@@ -31,16 +31,10 @@
 
                                 @forelse($documents as $document)
                                 <tr>
-                                    @if($document->status == 0)
-                                        <td><small class="label pull-left bg-gray">Aguardando Transmissão</small></td>
-                                    @elseif($document->status == 1)
-                                        <td><small class="label pull-left bg-yellow">Aguardando Retorno</small></td>
-                                    @elseif($document->status == 2)
-                                        <td><small class="label pull-left bg-red">Erro ao processar</small></td>
-                                    @elseif($document->status == 3)
-                                        <td><small class="label pull-left bg-green">Processado com sucesso</small></td>
-                                    @endif
 
+                                    <td>
+                                        {!! $document->documentStatus->status_label !!}
+                                    </td>
                                     <td><a href="#">{{ $document->original_file_name }}</a></td>
                                     <td>{{ $document->partner }}</td>
                                     <td>{{ $document->user_created->name }}</td>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DocumentHistory extends Model
 {
     protected $fillable = [
-        'action_id',
+        'action_code_id',
         'created_by',
         'document_id'
     ];
@@ -23,6 +23,6 @@ class DocumentHistory extends Model
     
     public function action_code()
     {
-        return $this->belongsTo('ProjectNpx\ActionHistoryCode', 'action_id');
+        return $this->belongsTo('ProjectNpx\ActionCode', 'action_code_id');
     }
 }

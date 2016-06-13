@@ -14,7 +14,6 @@ class CreateDocumentHistoriesTable extends Migration
     {
         Schema::create('document_histories', function (Blueprint $table) {
             $table->increments('id');
-            $table->smallInteger('action_id');
             $table->integer('created_by');
             $table->foreign('created_by')->references('id')->on('users');
             $table->integer('document_id');
