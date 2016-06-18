@@ -4,6 +4,8 @@ namespace ProjectNpx\Providers;
 
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use ProjectNpx\Menu;
+use ProjectNpx\Policies\MenuPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -14,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'ProjectNpx\Model' => 'ProjectNpx\Policies\ModelPolicy',
+        //Menu::class => MenuPolicy::class
     ];
 
     /**

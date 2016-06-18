@@ -2,9 +2,9 @@
 
 namespace ProjectNpx\Http\Controllers;
 
-use Illuminate\Http\Request;
 
-use ProjectNpx\Http\Requests;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use ProjectNpx\Menu;
 use ProjectNpx\User;
 
@@ -18,8 +18,41 @@ class AccessControlController extends Controller
     }
 
     public function details($id, Menu $menu){
-        $user = $this->userModel->find($id);
+        $user_menus = $this->userModel->find($id)->menus->lists('id');
         $menus = $menu->all();
-        return view('users.edit', compact('user', 'menus'));
+        $user = $this->userModel->find($id);
+        return view('users.edit', compact('user_menus', 'menus', 'user'));
+    }
+
+
+    public function teste_rota(Route $route){
+        dd($route->getName());
+    }
+
+    public function attach(Request $request){
+        if ($request->ajax()) {
+            try{
+
+                if($request->menu_ids == ""){
+                    $array_menus = [];
+                } else {
+                    $array_menus = $request->menu_ids;
+                }
+                $this->userModel->find($request->user_id)->menus()->sync($array_menus);
+
+                $content = ['status' => 'true'];
+            } catch (\Exception $e) {
+                $content = [
+                    'status' => 'false',
+                    'error_message' => $e->getMessage()
+                ];
+            }
+
+        } else {
+            $content = ['status' => 'false',
+                        'error_message' => 'Requisição ao servidor inválida!'];
+        }
+
+        return $content;
     }
 }

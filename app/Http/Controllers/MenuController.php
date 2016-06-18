@@ -5,6 +5,7 @@ namespace ProjectNpx\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use ProjectNpx\Menu;
@@ -80,6 +81,11 @@ class MenuController extends Controller
 
     public function update(Request $request, $id)
     {
+        /* Exemplo de autorização
+         * $menu = Menu::find(1);
+         * $this->authorize('update', $menu);
+         */
+
         $rules = array(
             'route_description' => 'required',
             'font_awesome_description' => 'required',
@@ -99,7 +105,6 @@ class MenuController extends Controller
                     'font_awesome_description' => $request->font_awesome_description,
                     'name' => $request->name,
                     'parent_menu_id' => $request->parent_menu_id,
-                    'created_by' => Auth::user()->id,
                     'last_updated_by' => Auth::user()->id
                 ]);
 

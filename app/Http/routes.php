@@ -19,13 +19,15 @@ Route::controllers([
     'test' => 'TestController'
 ]);
 
-Route::group(['middleware' => 'auth'], function()
+
+Route::group(['middleware' => ['web','auth']], function()
 {
     Route::get('/', ['uses' => 'DocumentController@index']);
 
     Route::group(['prefix'=>'admin', 'middleware' => 'admin'], function(){
         Route::group(['prefix' => 'user'], function(){
-           Route::get('{id}/details', ['as' => 'admin.user.details', 'uses' => 'AccessControlController@details']);
+            Route::get('{id}/details', ['as' => 'admin.user.details', 'uses' => 'AccessControlController@details']);
+            Route::post('attach', ['as' => 'admin.user.attach', 'uses' => 'AccessControlController@attach']);
         });
 
         Route::get('/teste', ['uses' => 'DocumentController@monitor']);
@@ -53,6 +55,31 @@ Route::group(['middleware' => 'auth'], function()
             Route::put('{id}/update', ['as' => 'superuser.action_code.update', 'uses' => 'ActionCodeController@update']);
             Route::get('{id}/destroy', ['as' => 'superuser.action_code.destroy', 'uses' => 'ActionCodeController@destroy']);
         });
+        Route::group(['prefix' => 'role'], function(){
+            Route::get('/', ['as' => 'superuser.role.index', 'uses' => 'RoleController@index']);
+            Route::get('/create', ['as' => 'superuser.role.create', 'uses' => 'RoleController@create']);
+            Route::post('/store', ['as' => 'superuser.role.store', 'uses' => 'RoleController@store']);
+            Route::get('{id}/edit', ['as' => 'superuser.role.edit', 'uses' => 'RoleController@edit']);
+            Route::put('{id}/update', ['as' => 'superuser.role.update', 'uses' => 'RoleController@update']);
+            Route::get('{id}/destroy', ['as' => 'superuser.role.destroy', 'uses' => 'RoleController@destroy']);
+
+            Route::group(['prefix' => 'permissions'], function(){
+                Route::get('/{id}', ['as' => 'superuser.role.permissions', 'uses' => 'RoleController@permissions']);
+                Route::get('/revoke/{id}', ['as' => 'superuser.role.permissions.revoke', 'uses' => 'RoleController@revokePermission']);
+                Route::post('/add', ['as' => 'superuser.role.permissions.add', 'uses' => 'RoleController@addPemission']);
+            });
+
+        });
+        Route::group(['prefix' => 'permission'], function(){
+            Route::get('/', ['as' => 'superuser.permission.index', 'uses' => 'PermissionController@index']);
+
+            Route::get('/create', ['as' => 'superuser.permission.create', 'uses' => 'PermissionController@create']);
+            Route::post('/store', ['as' => 'superuser.permission.store', 'uses' => 'PermissionController@store']);
+            Route::get('{id}/edit', ['as' => 'superuser.permission.edit', 'uses' => 'PermissionController@edit']);
+            Route::put('{id}/update', ['as' => 'superuser.permission.update', 'uses' => 'PermissionController@update']);
+            Route::get('{id}/destroy', ['as' => 'superuser.permission.destroy', 'uses' => 'PermissionController@destroy']);
+        });
+
     });
 
     Route::group(['prefix'=>'documents'], function()
@@ -63,5 +90,6 @@ Route::group(['middleware' => 'auth'], function()
         Route::get('{id}/history', ['as'=> 'document.history', 'uses' => 'DocumentController@document_history']);
     });
 });
+
 
 

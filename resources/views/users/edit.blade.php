@@ -2,6 +2,26 @@
 
 @section('content')
 
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Confirmação</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Fim Modal -->
+
     <section class="content">
 
         <div class="row">
@@ -79,17 +99,17 @@
                                 <br>
                                     <!-- Menus disponíveis -->
                                 <form class="form-horizontal">
-                                        <select  class="form-control" multiple="multiple" id="my-select" name="my-select[]">
-                                            @foreach($menus as $menu)
-                                            <option value='{{ $menu->id }}'>{{ $menu->name }} {!! $menu->font_awesome_description !!}</option>
-                                            @endforeach
-                                        </select>
+                                    <select id='searchable' multiple='multiple'>
+                                        @foreach($menus as $menu)
+                                            <option value='{{ $menu->id }}'>{{ $menu->name }}</option>
+                                        @endforeach
+                                    </select>
 
                                     <!-- /.Menus disponíveis -->
                                     <br>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-2">
-                                            <button type="submit" class="btn btn-danger">Submit</button>
+                                            <a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-danger" onclick="attach_user_access()">Submit</a>
                                         </div>
                                     </div>
 
@@ -148,7 +168,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-danger">Submit</button>
+                                        <a href="#" class="btn btn-danger">Submit</a>
                                     </div>
                                 </div>
                             </form>
@@ -181,9 +201,9 @@
         }
 
 
-        $("#my-select").multiSelect({
-            selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='try \"12\"'><br><br>",
-            selectionHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='try \"4\"'><br><br>",
+        $('#searchable').multiSelect({
+            selectableHeader: "<input type='text' class='form-control input-sm' autocomplete='off' placeholder='Busca'>",
+            selectionHeader: "<input type='text' class='form-control input-sm' autocomplete='off' placeholder='Busca'>",
             afterInit: function(ms){
                 var that = this,
                         $selectableSearch = that.$selectableUl.prev(),
@@ -216,6 +236,46 @@
                 this.qs2.cache();
             }
         });
+
+        $('#searchable').multiSelect('select',{!! $user_menus !!});
+
+        function teste()
+        {
+            alert($('#searchable').val());
+        }
+
+        function attach_user_access(){
+
+            var content = $('#searchable').val();
+
+            $.ajaxSetup({
+                headers: { 'X-CSRF-TOKEN': '{{csrf_token()}}' }
+            });
+
+            $.ajax({
+                type: "POST",
+                data: {menu_ids: content,
+                       user_id: {{ $user->id }} },
+                dataType: "json",
+                url: "{{ route("admin.user.attach") }}",
+                async: false
+            }).done(function(data) {
+                var content = "";
+                if(data.status=="false"){
+
+                    content = "<strong>Erro!</strong> Houve algum erro de processamento dos seus regitros!" + data.error_message;
+
+                } else {
+
+                    content = "<strong>Ótimo!</strong> Registros processados com sucesso!";
+
+                }
+
+                $( ".modal-body" ).empty();
+                $(".modal-body").append(content);
+
+            });
+        }
 
     </script>
 @endsection
