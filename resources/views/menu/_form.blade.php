@@ -7,6 +7,13 @@
 
         </div>
 
+        <div class="form-group">
+
+            {!! Form::label('access_group', 'Grupo de Acesso:') !!}
+            {!! Form::text('access_group', null, ['class'=>'form-control', 'placeholder' => 'Informe o nome do Grupo de Acesso']) !!}
+
+        </div>
+
         {!! Form::label('font_awesome_description', 'Font Awesome Icon:') !!}
         <div class="input-group">
             {!! Form::text('font_awesome_description', null, ['class'=>'form-control target', 'placeholder' => 'Informe o código do ícone - Font Awesome']) !!}

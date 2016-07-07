@@ -89,7 +89,7 @@
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="{{ Route('superuser.role.edit', $role->id) }}">Editar</a></li>
                                             <li><a onclick="show_modal('{{ Route('superuser.role.destroy', $role->id) }}', '{{ $role->name }}')" data-toggle="modal" data-target="#myModal" href="#">Excluir</a></li>
-                                            <li><a href="{{ Route('superuser.role.permissions', $role->id) }}">Pemissões</a></li>
+                                            <li><a href="{{ Route('superuser.role.menu.index', $role->id) }}">Menus</a></li>
                                         </ul>
                                     </div>
                                 </td>

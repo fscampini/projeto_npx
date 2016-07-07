@@ -39,8 +39,8 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <i class="fa fa-plug" aria-hidden="true"></i>
-                    <h3 class="box-title">Cadastro de Menu</h3>
+                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    <h3 class="box-title">Cadastro de Usuário</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -59,33 +59,25 @@
                         </div>
                     @endif
 
-                    <a href="{{ Route('superuser.menu.create') }}" class="btn btn-primary" role="button">Adicionar Menu</a>
+                    <a href="{{ Route('admin.user.create') }}" class="btn btn-primary" role="button">Adicionar Usuário</a>
                     <br>
                     <br>
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>Descrição da Rota</th>
-                            <th>Font Awesome</th>
-                            <th>Sub-Menus</th>
-                            <th>Atualizado Por</th>
-                            <th>Data Atualização</th>
+                            <th>Email</th>
+                            <th>Password</th>
                             <th>Ação</th>
                         </tr>
                         </thead>
                         <tbody>
 
-                        @forelse($menus as $menu)
+                        @forelse($users as $user)
                             <tr>
-                                <td><a href="#">{{ $menu->name}}</a></td>
-                                <td>{{ $menu->route_description }}</td>
-                                <td>{!! $menu->font_awesome_description !!}</td>
-                                <td>{{ $menu->child_menus->count() }}</td>
-                                <td>{{ $menu->user_updated->name }}</td>
-                                <td>{{ $menu->updated_at }}</td>
-
-
+                                <td><a href="#">{{ $user->name}}</a></td>
+                                <td>{{ $user->email }}</td>
+                                <td>************</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default">Ação</button>
@@ -94,9 +86,8 @@
                                             <span class="sr-only">Toggle Dropdown</span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="{{ Route('superuser.menu.edit', $menu->id) }}">Editar</a></li>
-                                            <li><a onclick="show_modal('{{ Route('superuser.menu.destroy', $menu->id) }}', '{{ $menu->name }}')" data-toggle="modal" data-target="#myModal" href="#">Excluir</a></li>
-                                            <li><a href="{{ Route('superuser.menu.submenu.index', $menu->id) }}">SubMenus</a></li>
+                                            <li><a href="{{ Route('admin.user.edit', $user->id) }}">Detalhes</a></li>
+                                            <li><a onclick="show_modal('{{ Route('admin.user.destroy', $user->id) }}', '{{ $user->name }}')" data-toggle="modal" data-target="#myModal" href="#">Excluir</a></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -116,17 +107,14 @@
                         <tfoot>
                         <tr>
                             <th>Nome</th>
-                            <th>Descrição da Rota</th>
-                            <th>Font Awesome</th>
-                            <th>Atualizado Por</th>
-                            <th>Sub-Menus</th>
-                            <th>Data Atualização</th>
+                            <th>Email</th>
+                            <th>Password</th>
                             <th>Ação</th>
                         </tr>
                         </tfoot>
                     </table>
 
-                    {!! $menus->render() !!}
+                    {!! $users->render() !!}
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -144,7 +132,7 @@
 
     </script>
 
-    <input type="hidden" value="{{ $indice = '9' }}">
+    <input type="hidden" value="{{ $indice = '8' }}">
 
 @endsection
 

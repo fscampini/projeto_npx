@@ -43,29 +43,33 @@ class MenuController extends Controller
         $rules = array(
             'route_description' => 'required',
             'font_awesome_description' => 'required',
+            'access_group' => 'required',
             'name' => 'required',
         );
 
         $validator = Validator::make($request->all(), $rules);
 
+        //dd($request->parent_menu_id);
+
         if ($validator->fails()){
             return Redirect::to('superuser/menu/create')->withErrors($validator);
         } else {
 
-            try {
+            //try {
 
                 $this->menuModel->create([
                     'route_description' => $request->route_description,
                     'font_awesome_description' => $request->font_awesome_description,
+                    'access_group' => $request->access_group,
                     'name' => $request->name,
-                    'parent_menu_id' => $request->parent_menu_id,
+                    'parent_menu_id' => $request->parent_menu_id <> "" ? $request->parent_menu_id : null ,
                     'created_by' => Auth::user()->id,
                     'last_updated_by' => Auth::user()->id
                 ]);
 
-            } catch (\Exception $e) {
+            /*} catch (\Exception $e) {
                 return Redirect::to('superuser/menu/create')->withErrors($e->getMessage());
-            }
+            }*/
         }
 
         return Redirect::to('superuser/menu');
@@ -89,6 +93,7 @@ class MenuController extends Controller
         $rules = array(
             'route_description' => 'required',
             'font_awesome_description' => 'required',
+            'access_group' => 'required',
             'name' => 'required',
         );
 
@@ -103,8 +108,9 @@ class MenuController extends Controller
                 $this->menuModel->find($id)->update([
                     'route_description' => $request->route_description,
                     'font_awesome_description' => $request->font_awesome_description,
+                    'access_group' => $request->access_group,
                     'name' => $request->name,
-                    'parent_menu_id' => $request->parent_menu_id,
+                    'parent_menu_id' => $request->parent_menu_id <> "" ? $request->parent_menu_id : null ,
                     'last_updated_by' => Auth::user()->id
                 ]);
 

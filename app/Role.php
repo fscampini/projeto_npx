@@ -21,6 +21,10 @@ class Role extends Model
         return $this->belongsTo('ProjectNpx\User', 'last_updated_by');
     }
 
+    public function menus(){
+        return $this->belongsToMany('ProjectNpx\Menu');
+    }
+
     public function permissions(){
         return $this->belongsToMany('ProjectNpx\Permission');
     }

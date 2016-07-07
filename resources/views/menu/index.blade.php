@@ -69,8 +69,7 @@
                             <th>Descrição da Rota</th>
                             <th>Font Awesome</th>
                             <th>Sub-Menus</th>
-                            <th>Atualizado Por</th>
-                            <th>Data Atualização</th>
+                            <th>Grupo de Acesso</th>
                             <th>Ação</th>
                         </tr>
                         </thead>
@@ -82,10 +81,7 @@
                                 <td>{{ $menu->route_description }}</td>
                                 <td>{!! $menu->font_awesome_description !!}</td>
                                 <td>{{ $menu->child_menus->count() }}</td>
-                                <td>{{ $menu->user_updated->name }}</td>
-                                <td>{{ $menu->updated_at }}</td>
-
-
+                                <td>{{ $menu->access_group }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default">Ação</button>
@@ -118,9 +114,8 @@
                             <th>Nome</th>
                             <th>Descrição da Rota</th>
                             <th>Font Awesome</th>
-                            <th>Atualizado Por</th>
                             <th>Sub-Menus</th>
-                            <th>Data Atualização</th>
+                            <th>Grupo de Acesso</th>
                             <th>Ação</th>
                         </tr>
                         </tfoot>

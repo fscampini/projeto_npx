@@ -23,166 +23,160 @@
         <!-- Fim Modal -->
 
     <section class="content">
+        <form>
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- Profile Image -->
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <img class="profile-user-img img-responsive img-circle" src="{{ asset("/bower_components/AdminLTE/dist/img/felipe.jpg") }}" alt="User profile picture">
 
-        <div class="row">
-            <div class="col-md-3">
-                <!-- Profile Image -->
-                <div class="box box-primary">
-                    <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="{{ asset("/bower_components/AdminLTE/dist/img/felipe.jpg") }}" alt="User profile picture">
+                            <h3 class="profile-username text-center">{{ $user->name }}</h3>
 
-                        <h3 class="profile-username text-center">{{ $user->name }}</h3>
+                            <p class="text-muted text-center">Software Engineer - TKS Founder</p>
 
-                        <p class="text-muted text-center">Software Engineer - TKS Founder</p>
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <b>E-mail</b> <a class="pull-right">{{ $user->email }}</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Perfil:</b>
+                                    {!! Form::select('role_id', array('' => '') + $roles->lists('name', 'id')->toArray(), isset($user->role->id) ? $user->role->id : null, ['class'=>'form-control target_role']) !!}
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Grupo</b> <a class="pull-right">XPTO</a>
+                                </li>
+                            </ul>
 
-                        <ul class="list-group list-group-unbordered">
-                            <li class="list-group-item">
-                                <b>E-mail</b> <a class="pull-right">{{ $user->email }}</a>
-                            </li>
-                            <li class="list-group-item">
-                                <b>Área</b> <a class="pull-right">Financeiro</a>
-                            </li>
-                            <li class="list-group-item">
-                                <b>Grupo</b> <a class="pull-right">XPTO</a>
-                            </li>
+                            <a href="#" class="btn btn-primary btn-block"><b>Liberar Acesso</b></a>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+
+                    <!-- About Me Box -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Detalhes</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <strong><i class="fa fa-book margin-r-5"></i> Data Criação</strong>
+
+                            <p class="text-muted">
+                                {{ $user->created_at }}
+                            </p>
+
+                            <hr>
+
+                            <strong><i class="fa fa-map-marker margin-r-5"></i> Unidade</strong>
+
+                            <p class="text-muted">Rio de Janeiro</p>
+
+                            <hr>
+
+                            <strong><i class="fa fa-file-text-o margin-r-5"></i> Motivo para acesso</strong>
+
+                            <p>Necessário para trabalhar na frente funcional da área Financeira.</p>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+                <!-- /.col -->
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#access-control" data-toggle="tab">Controle de Acesso</a></li>
+                            <li><a href="#settings" data-toggle="tab">Dados do Usuário</a></li>
                         </ul>
 
-                        <a href="#" class="btn btn-primary btn-block"><b>Liberar Acesso</b></a>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
+                        <div class="tab-content">
 
-                <!-- About Me Box -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Detalhes</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <strong><i class="fa fa-book margin-r-5"></i> Data Criação</strong>
+                            <div class="active tab-pane" id="access-control">
 
-                        <p class="text-muted">
-                            {{ $user->created_at }}
-                        </p>
+                                    <br>
+                                        <!-- Menus disponíveis -->
+                                    <div class="form-horizontal">
+                                        <select id='searchable' multiple='multiple'>
+                                            @foreach($menus as $menu)
+                                                <option value={{ $menu->id }}>{{ $menu->name }}</option>
+                                            @endforeach
+                                        </select>
 
-                        <hr>
+                                        <!-- /.Menus disponíveis -->
+                                        <br>
+                                    </div>
 
-                        <strong><i class="fa fa-map-marker margin-r-5"></i> Unidade</strong>
+                                <a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-primary" onclick="attach_user_access()">Salvar</a>
+                                <a href="{{ Route('admin.user.index') }}" class="btn btn-primary" role="button">Retornar</a>
 
-                        <p class="text-muted">Rio de Janeiro</p>
+                            </div>
+                            <!-- /.tab-pane -->
 
-                        <hr>
-
-                        <strong><i class="fa fa-file-text-o margin-r-5"></i> Motivo para acesso</strong>
-
-                        <p>Necessário para trabalhar na frente funcional da área Financeira.</p>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-            </div>
-
-            <!-- /.col -->
-            <div class="col-md-9">
-                <div class="nav-tabs-custom">
-
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#access-control" data-toggle="tab">Controle de Acesso</a></li>
-                        <li><a href="#settings" data-toggle="tab">Dados do Usuário</a></li>
-                    </ul>
-
-                    <div class="tab-content">
-
-                        <div class="active tab-pane" id="access-control">
+                            <div class="tab-pane" id="settings">
 
                                 <br>
-                                    <!-- Menus disponíveis -->
-                                <form class="form-horizontal">
-                                    <select id='searchable' multiple='multiple'>
-                                        @foreach($menus as $menu)
-                                            <option value='{{ $menu->id }}'>{{ $menu->name }}</option>
-                                        @endforeach
-                                    </select>
 
-                                    <!-- /.Menus disponíveis -->
-                                    <br>
+                                <div class="form-horizontal">
                                     <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-2">
-                                            <a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-danger" onclick="attach_user_access()">Submit</a>
+                                        {!! Form::label('name', 'Nome:', ['class' => "col-sm-2 control-label"]) !!}
+
+                                        <div class="col-sm-10">
+                                            {!! Form::text('name', null, ['class'=>'form-control', 'placeholder' => 'Informe o nome do Menu']) !!}
                                         </div>
                                     </div>
 
-                                </form>
+                                    <div class="form-group">
+                                        {!! Form::label('email', 'E-mail:', ['class' => "col-sm-2 control-label"]) !!}
 
-
-
-                        </div>
-                        <!-- /.tab-pane -->
-
-                        <div class="tab-pane" id="settings">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label for="inputName" class="col-sm-2 control-label">Name</label>
-
-                                    <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputName" placeholder="Name">
+                                        <div class="col-sm-10">
+                                            {!! Form::text('email', null, ['class'=>'form-control', 'placeholder' => 'Informe o e-mail do Usuário']) !!}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
-                                    <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+                                    <div class="form-group">
+                                        {!! Form::label('password', 'Password:', ['class' => "col-sm-2 control-label"]) !!}
 
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputName" placeholder="Name">
+                                        <div class="col-sm-10">
+                                            {!! Form::password('password', null, ['class'=>'form-control', 'placeholder' => 'Informe o password do Usuário']) !!}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
 
-                                    <div class="col-sm-10">
-                                        <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
+                                    <div class="form-group">
+                                        {!! Form::label('repeat-password', 'Repetir o Password:', ['class' => "col-sm-2 control-label"]) !!}
 
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                                        <div class="col-sm-10">
+                                            {!! Form::password('repeat-password', null, ['class'=>'form-control', 'placeholder' => 'Informe o password do Usuário']) !!}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                            </label>
+
+
+                                    <div class="form-group">
+                                        {!! Form::label('image', 'Foto:', ['class' => "col-sm-2 control-label"]) !!}
+
+                                        <div class="col-sm-10">
+                                            {!! Form::file('image', null, ['class'=>'form-control']) !!}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <a href="#" class="btn btn-danger">Submit</a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.tab-pane -->
 
+                                <a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-primary" onclick="attach_user_access()">Salvar</a>
+                                <a href="{{ Route('admin.user.index') }}" class="btn btn-primary" role="button">Retornar</a>
+                            </div>
+                            <!-- /.tab-pane -->
+
+                        </div>
+                        <!-- /.tab-content -->
                     </div>
-                    <!-- /.tab-content -->
+                    <!-- /.nav-tabs-custom -->
                 </div>
-                <!-- /.nav-tabs-custom -->
+                <!-- /.col -->
             </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
+            <!-- /.row -->
+        </form>
 
     </section>
 
@@ -192,6 +186,40 @@
 
 @section('javascript')
     <script>
+
+        $( ".target_role" ).change(function() {
+
+            $.ajaxSetup({
+                headers: { 'X-CSRF-TOKEN': '{{csrf_token()}}' }
+            });
+
+            $.ajax({
+                type: "GET",
+                data: {role_id: $( ".target_role" ).val() },
+                dataType: "json",
+                url: "{{ route("superuser.role.menu.menulist") }}",
+                async: false
+            }).done(function(data) {
+                var content = "";
+                if(data.status=="false"){
+
+                    content = "<strong>Erro!</strong> Houve algum erro de processamento dos seus regitros!" + data.error_message;
+
+                } else {
+                    var menus = data.menu_ids;
+                    menus = menus.map(String);
+
+                    $('#searchable').multiSelect('deselect_all');
+                    $('#searchable').multiSelect('select', menus);
+                }
+
+                $( ".modal-body" ).empty();
+                $(".modal-body").append(content);
+
+            });
+
+        });
+
         function show_modal(url, content)
         {
             $( ".inner_2" ).empty();
@@ -237,16 +265,18 @@
             }
         });
 
-        $('#searchable').multiSelect('select',{!! $user_menus !!});
+        var selected_menus = [
+            @foreach($user_menus->lists('id') as $id_menu)
+                    '{{ $id_menu }}',
+            @endforeach
+        ];
 
-        function teste()
-        {
-            alert($('#searchable').val());
-        }
+        $('#searchable').multiSelect('select', selected_menus);
 
         function attach_user_access(){
 
-            var content = $('#searchable').val();
+            var selected_menus = $('#searchable').val();
+
 
             $.ajaxSetup({
                 headers: { 'X-CSRF-TOKEN': '{{csrf_token()}}' }
@@ -254,8 +284,11 @@
 
             $.ajax({
                 type: "POST",
-                data: {menu_ids: content,
-                       user_id: {{ $user->id }} },
+                data:   {
+                            menu_ids: selected_menus,
+                            user_id: {{ $user->id }},
+                            content: $( 'form' ).serializeArray()
+                        },
                 dataType: "json",
                 url: "{{ route("admin.user.attach") }}",
                 async: false

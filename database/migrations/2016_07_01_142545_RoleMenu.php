@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFieldsToUserTable extends Migration
+class RoleMenu extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,13 @@ class AddFieldsToUserTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->tinyInteger('role_id')->unasigned()->nullable();
+        Schema::create('menu_role', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->text('access_reason')->nullable();
+            $table->integer('menu_id');
+            $table->foreign('menu_id')->references('id')->on('menus');
+            $table->timestamps();
         });
     }
 
@@ -26,9 +29,6 @@ class AddFieldsToUserTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->removeColumn('is_admin');
-            $table->removeColumn('is_superuser');
-        });
+        Schema::drop('menu_role');
     }
 }

@@ -51,6 +51,7 @@ class Kernel extends HttpKernel
         'guest' => \ProjectNpx\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin' => \ProjectNpx\Http\Middleware\VerifyAdmin::class,
-        'superuser' => \ProjectNpx\Http\Middleware\VerifySuperUser::class
+        'superuser' => \ProjectNpx\Http\Middleware\VerifySuperUser::class,
+        'access' => \ProjectNpx\Http\Middleware\CheckAccess::class
     ];
 }

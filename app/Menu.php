@@ -10,6 +10,7 @@ class Menu extends Model
         'route_description',
         'font_awesome_description',
         'name',
+        'access_group',
         'parent_menu_id',
         'created_by',
         'last_updated_by'
@@ -40,5 +41,9 @@ class Menu extends Model
     public function parent_menu()
     {
         return $this->belongsTo('ProjectNpx\Menu', 'parent_menu_id');
+    }
+
+    public function roles(){
+        return $this->belongsToMany('ProjectNpx\Role');
     }
 }

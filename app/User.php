@@ -41,4 +41,31 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('ProjectNpx\Menu')->where('parent_menu_id', '=', null);
     }
+
+    public function role()
+    {
+        return $this->belongsTo('ProjectNpx\Role');
+    }
+
+    public function hasAnyMenu($menus)
+    {
+        if (is_array($menus)) {
+           foreach ($menus as $menu) {
+               if ($this->hasRole($menu)){
+                   return true;
+               }
+           }
+        } else {
+            if ($this->hasRole($menus)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function hasRole($role)
+    {
+        //if ($this->menus()->())
+    }
+
 }

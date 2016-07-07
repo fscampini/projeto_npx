@@ -18,9 +18,7 @@ class UserTableSeeder extends Seeder
             [
                 'name'=> 'Felipe Scampini da Silva',
                 'email' => 'fscampini@gmail.com',
-                'password' => Hash::make('evfdna85'),
-                'is_admin' => true,
-                'is_superuser' => true
+                'password' => Hash::make('0410147')
             ]
         );
 
